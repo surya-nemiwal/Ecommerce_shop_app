@@ -28,7 +28,18 @@ class ProductItem extends StatelessWidget {
                     product.favorite ? Icons.favorite : Icons.favorite_border,
                     color: Theme.of(context).primaryColor,
                   ),
-                  onPressed: () => product.toggleFavorite(),
+                  onPressed: () async {
+                    try {
+                      await product.toggleFavorite();
+                    } catch (e) {
+                      Scaffold.of(context).hideCurrentSnackBar();
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text(e.toString(),textAlign: TextAlign.center,),
+                        duration: Duration(seconds: 1),
+                      ));
+                      print(e.toString());
+                    }
+                  },
                 );
               },
             ),
@@ -39,7 +50,7 @@ class ProductItem extends StatelessWidget {
             trailing: IconButton(
                 icon: Icon(
                   Icons.shopping_cart,
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).primaryColorDark,
                 ),
                 onPressed: () {
                   cart.addItem(

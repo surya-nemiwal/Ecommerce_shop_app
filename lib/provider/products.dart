@@ -118,14 +118,15 @@ class Products with ChangeNotifier {
         ),
       );
       var prodIndex = _items.indexWhere((element) => element.id == product.id);
-      _items[prodIndex] = Product(
-        id: product.id,
-        title: product.title,
-        price: product.price,
-        description: product.description,
-        imageUrl: product.imageUrl,
-        favorite: product.favorite,
-      );
+      _items[prodIndex] = product;
+      // Product(
+      //   id: product.id,
+      //   title: product.title,
+      //   price: product.price,
+      //   description: product.description,
+      //   imageUrl: product.imageUrl,
+      //   favorite: product.favorite,
+      // );
     }
     notifyListeners();
   }
@@ -140,8 +141,7 @@ class Products with ChangeNotifier {
     if (response.statusCode >= 400) {
       _items.insert(deletedProductIndex, deletedProduct);
       notifyListeners();
-      throw DeleteException;
+      throw DeleteException();
     }
-    
   }
 }
